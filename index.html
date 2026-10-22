@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>무비시네마 (MOVIE CINEMA) - 당신을 위한 영화 추천 & 간식 룰렛</title>
+  <meta name="description" content="어두운 영화관 감성의 세련된 영화 추천 웹페이지. 장르별 영화 탐색, 오늘의 랜덤 영화 추천, 영화 간식 룰렛을 즐겨보세요.">
+  
+  <!-- Google Fonts: Outfit & Noto Sans KR -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 영화관 앰비언트 라이트 배경 효과 -->
+  <div class="cinema-ambient">
+    <div class="projector-beam"></div>
+    <div class="light-spot left"></div>
+    <div class="light-spot right"></div>
+  </div>
+
+  <!-- 상단 네비게이션 헤더 -->
+  <header class="cinema-header" id="header">
+    <div class="header-inner container">
+      <a href="#home" class="logo" id="site-logo">
+        <span class="logo-icon"><i class="fa-solid fa-film"></i></span>
+        <div class="logo-text">
+          <span class="logo-title">MOVIE CINEMA</span>
+          <span class="logo-sub">무비시네마</span>
+        </div>
+      </a>
+
+      <!-- 데스크톱 네비게이션 -->
+      <nav class="nav-menu" id="nav-menu">
+        <a href="#home" class="nav-link active"><i class="fa-solid fa-house"></i> 홈</a>
+        <a href="#movies" class="nav-link"><i class="fa-solid fa-clapperboard"></i> 장르별 영화</a>
+        <a href="javascript:void(0)" class="nav-link highlight-link" id="nav-random-btn"><i class="fa-solid fa-dice"></i> 랜덤 추천</a>
+        <a href="#snack-section" class="nav-link highlight-link snack-link"><i class="fa-solid fa-bowl-food"></i> 간식 룰렛</a>
+      </nav>
+
+      <!-- 모바일 햄버거 메뉴 토글 -->
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="메뉴 열기">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- 1. 히어로 메인 섹션 -->
+    <section class="hero-section" id="home">
+      <div class="hero-overlay"></div>
+      <div class="container hero-content">
+        <div class="hero-badge">
+          <i class="fa-solid fa-ticket"></i> CINEMA LOUNGE & MOVIE CURATION
+        </div>
+        <h1 class="hero-title">
+          오늘은 어떤 <span class="text-red">영화</span>를 볼까요?
+        </h1>
+        <p class="hero-desc">
+          당신의 취향에 맞는 최고의 영화를 찾아보세요.<br class="mobile-br">
+          극장의 설렘과 풍미 가득한 간식까지 한 번에 골라드립니다.
+        </p>
+
+        <div class="hero-cta-group">
+          <button class="btn btn-primary" id="hero-random-btn">
+            <i class="fa-solid fa-shuffle"></i>
+            <span>랜덤 영화 추천 받기</span>
+          </button>
+          <a href="#snack-section" class="btn btn-secondary" id="hero-snack-btn">
+            <i class="fa-solid fa-cookie-bite"></i>
+            <span>간식 룰렛 돌리기</span>
+          </a>
+        </div>
+
+        <!-- 시네마틱 퀵 인포 바 -->
+        <div class="hero-stats">
+          <div class="stat-item">
+            <i class="fa-solid fa-film"></i>
+            <div>
+              <span class="stat-num" id="total-movies-count">12</span>
+              <span class="stat-label">엄선된 명작</span>
+            </div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <i class="fa-solid fa-layer-group"></i>
+            <div>
+              <span class="stat-num">6+</span>
+              <span class="stat-label">다채로운 장르</span>
+            </div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <i class="fa-solid fa-popcorn"></i>
+            <div>
+              <span class="stat-num">10</span>
+              <span class="stat-label">극장 필수 간식</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. 장르별 영화 분류 및 영화 목록 섹션 -->
+    <section class="movies-section" id="movies">
+      <div class="container">
+        
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <div class="section-badge"><i class="fa-solid fa-video"></i> NOW SHOWING</div>
+            <h2 class="section-title">영화 목록 및 장르 선택</h2>
+            <p class="section-desc">보고 싶은 장르를 선택해 원하는 명작을 손쉽게 찾아보세요.</p>
+          </div>
+          
+          <div class="view-status">
+            총 <span class="highlight-count" id="filtered-count">12</span>편 상영 중
+          </div>
+        </div>
+
+        <!-- 장르 선택 탭 버튼 바 -->
+        <div class="genre-filter-bar" id="genre-filter-bar">
+          <button class="genre-btn active" data-genre="전체">
+            <i class="fa-solid fa-globe"></i> 전체
+          </button>
+          <button class="genre-btn" data-genre="액션">
+            <i class="fa-solid fa-gun"></i> 액션
+          </button>
+          <button class="genre-btn" data-genre="코미디">
+            <i class="fa-solid fa-face-laugh-squint"></i> 코미디
+          </button>
+          <button class="genre-btn" data-genre="SF">
+            <i class="fa-solid fa-rocket"></i> SF
+          </button>
+          <button class="genre-btn" data-genre="스릴러">
+            <i class="fa-solid fa-skull"></i> 스릴러
+          </button>
+          <button class="genre-btn" data-genre="로맨스">
+            <i class="fa-solid fa-heart"></i> 로맨스
+          </button>
+          <button class="genre-btn" data-genre="애니메이션">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> 애니메이션
+          </button>
+        </div>
+
+        <!-- 영화 카드 그리드 -->
+        <div class="movies-grid" id="movies-grid">
+          <!-- 자바스크립트로 12개 영화 카드 렌더링 -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3. 영화 간식 룰렛 섹션 -->
+    <section class="snack-section" id="snack-section">
+      <div class="container">
+        
+        <div class="section-header text-center">
+          <div class="section-badge center"><i class="fa-solid fa-utensils"></i> CINEMA SNACK BAR</div>
+          <h2 class="section-title">영화 볼 때 뭐 먹지? <span class="text-red">간식 룰렛</span></h2>
+          <p class="section-desc">
+            영화의 재미를 두 배로! 고민되는 영화관 간식을 룰렛으로 결정해보세요.
+          </p>
+        </div>
+
+        <div class="snack-roulette-container">
+          
+          <!-- 룰렛 보드 영역 -->
+          <div class="roulette-board-wrapper">
+            <!-- 극장 네온 프레임 -->
+            <div class="roulette-neon-glow"></div>
+            
+            <!-- 상단 인디케이터(바늘) -->
+            <div class="roulette-pointer" id="roulette-pointer">
+              <div class="pointer-arrow"></div>
+              <div class="pointer-pin"></div>
+            </div>
+
+            <!-- 캔버스 룰렛 -->
+            <canvas id="roulette-canvas" width="480" height="480"></canvas>
+
+            <!-- 중앙 시네마 엠블럼 허브 -->
+            <div class="roulette-center-hub" id="roulette-center-hub">
+              <i class="fa-solid fa-film"></i>
+              <span>SPIN</span>
+            </div>
+          </div>
+
+          <!-- 룰렛 제어 & 실시간 결과 패널 -->
+          <div class="snack-control-card">
+            <div class="snack-card-header">
+              <div class="card-badge"><i class="fa-solid fa-ticket-simple"></i> SNACK MENU</div>
+              <h3>오늘의 극장 간식 후보</h3>
+              <p>총 10가지 인기 시네마 스낵이 준비되어 있습니다.</p>
+            </div>
+
+            <div class="snack-items-pill-grid" id="snack-pills">
+              <!-- 간식 목록 미니 뱃지 표시 -->
+            </div>
+
+            <div class="snack-action-area">
+              <button class="btn btn-primary btn-spin" id="spin-roulette-btn">
+                <i class="fa-solid fa-arrows-rotate" id="spin-icon"></i>
+                <span id="spin-btn-text">간식 룰렛 돌리기!</span>
+              </button>
+              
+              <div class="snack-tip">
+                <i class="fa-solid fa-circle-info"></i>
+                룰렛 바늘이 가리키는 정확한 간식이 당첨됩니다.
+              </div>
+            </div>
+
+            <!-- 이전 룰렛 결과 표시 배너 -->
+            <div class="snack-result-banner" id="snack-inline-result">
+              <span class="result-lead">최근 결정된 간식</span>
+              <div class="result-name-box">
+                <span class="snack-icon-display" id="recent-snack-icon">🍿</span>
+                <strong id="recent-snack-name">팝콘</strong>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- 영화 티켓 스타일: 랜덤 영화 추천 모달 -->
+  <div class="modal-backdrop" id="movie-modal-backdrop" role="dialog" aria-modal="true">
+    <div class="cinema-ticket-modal">
+      <button class="modal-close-btn" id="modal-close-btn" aria-label="팝업 닫기">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <!-- 티켓 헤더 -->
+      <div class="ticket-header">
+        <div class="ticket-type">
+          <i class="fa-solid fa-ticket"></i> TODAY'S CINEMA PICK
+        </div>
+        <div class="ticket-cinema-brand">MOVIE CINEMA</div>
+      </div>
+
+      <!-- 티켓 본문 (포스터 + 정보) -->
+      <div class="ticket-body">
+        
+        <div class="ticket-poster-wrap">
+          <img src="" alt="추천 영화 포스터" class="ticket-poster" id="ticket-poster-img">
+          <div class="ticket-rating-tag" id="ticket-rating">
+            <i class="fa-solid fa-star"></i> <span>9.2</span>
+          </div>
+        </div>
+
+        <div class="ticket-details">
+          <div class="ticket-genre-badge" id="ticket-genre">SF / 모험</div>
+          <h3 class="ticket-movie-title" id="ticket-title">인터스텔라</h3>
+          <p class="ticket-movie-eng" id="ticket-eng-title">Interstellar (2014)</p>
+
+          <div class="ticket-meta-grid">
+            <div class="meta-cell">
+              <span class="meta-label">상영관</span>
+              <span class="meta-value" id="ticket-screen">THEATER 1</span>
+            </div>
+            <div class="meta-cell">
+              <span class="meta-label">추천 좌석</span>
+              <span class="meta-value" id="ticket-seat">F-14 (명당)</span>
+            </div>
+            <div class="meta-cell">
+              <span class="meta-label">러닝타임</span>
+              <span class="meta-value" id="ticket-runtime">169분</span>
+            </div>
+          </div>
+
+          <div class="ticket-synopsis-box">
+            <h4><i class="fa-solid fa-align-left"></i> 줄거리</h4>
+            <p id="ticket-synopsis">세계 각국의 정부와 경제가 완전히 붕괴된 미래가 다가온다...</p>
+          </div>
+
+          <div class="ticket-actions">
+            <button class="btn btn-primary" id="reroll-random-btn">
+              <i class="fa-solid fa-shuffle"></i> 다른 영화 다시 추천받기
+            </button>
+            <button class="btn btn-outline" id="ticket-confirm-btn">
+              <i class="fa-solid fa-check"></i> 이 영화 볼래요!
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 티켓 하단 펀치 절취선 & 바코드 -->
+      <div class="ticket-perforation">
+        <div class="perforation-hole hole-left"></div>
+        <div class="perforation-line"></div>
+        <div class="perforation-hole hole-right"></div>
+      </div>
+
+      <div class="ticket-footer">
+        <div class="ticket-barcode-wrap">
+          <div class="barcode-lines"></div>
+          <span class="barcode-number">MC-2026-RECOMMEND-7749</span>
+        </div>
+        <span class="ticket-note">본 티켓은 무비시네마 취향 맞춤형 추천 결과입니다.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 간식 룰렛 당첨 팝업 모달 -->
+  <div class="modal-backdrop" id="snack-modal-backdrop" role="dialog" aria-modal="true">
+    <div class="snack-winner-modal">
+      <button class="modal-close-btn" id="snack-close-btn" aria-label="팝업 닫기">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="winner-confetti-effect" id="confetti-container"></div>
+
+      <div class="winner-badge">
+        <i class="fa-solid fa-award"></i> 당첨을 축하합니다!
+      </div>
+
+      <div class="winner-icon-huge" id="winner-snack-icon">🍿</div>
+      <h3 class="winner-title" id="winner-snack-title">팝콘</h3>
+      <p class="winner-desc" id="winner-snack-desc">
+        영화관 최고의 클래식! 고소하고 바삭한 팝콘과 함께 영화에 몰입해보세요.
+      </p>
+
+      <div class="winner-modal-actions">
+        <button class="btn btn-primary" id="snack-spin-again-btn">
+          <i class="fa-solid fa-arrows-rotate"></i> 다시 돌리기
+        </button>
+        <button class="btn btn-secondary" id="snack-confirm-btn">
+          <i class="fa-solid fa-check"></i> 간식 결정 완료!
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 푸터 -->
+  <footer class="cinema-footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <div class="logo">
+          <span class="logo-icon"><i class="fa-solid fa-film"></i></span>
+          <span class="logo-title">MOVIE CINEMA</span>
+        </div>
+        <p class="footer-tagline">
+          극장 분위기를 그대로 담은 당신만의 영화 추천 큐레이션 서비스
+        </p>
+      </div>
+
+      <div class="footer-decor">
+        <div class="decor-ticket">
+          <i class="fa-solid fa-ticket"></i> ADMIT ONE
+        </div>
+        <p class="copyright">
+          © 2026 MOVIE CINEMA. All rights reserved. Made with passion for films.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
